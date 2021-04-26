@@ -85,7 +85,7 @@ const Signup = (props: Props) => {
                     name="email"
                     autoComplete="email"
                     autoFocus
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e: any) => setEmail(e.target.value)}
                 />
                 <TextField
                     variant="outlined"
@@ -96,7 +96,7 @@ const Signup = (props: Props) => {
                     label="Password"
                     type="password"
                     id="password"
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e: any) => setPassword(e.target.value)}
                     autoComplete="current-password"
                 />
                 <Button
