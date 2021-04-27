@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { Token } from "./components/App/useToken";
 import Authentication from "./components/Authentication/Authentication";
-import Dashboard from "./components/Dashboard/Dashboard";
+import Dashboard from "./Pages/Dashboard";
 import DashboardLayout from "./components/View/DashboardLayout";
 import MainLayout from "./components/View/MainLayout";
 import Account from "./Pages/Account";
@@ -15,7 +15,7 @@ const routes = (token: string, setToken: setToken, isNewSession: boolean) => {
             path: "/app",
             element: <DashboardLayout />,
             children: [
-                { path: "dashboard", element: <Dashboard /> },
+                { path: "dashboard", element: <Dashboard token={token} /> },
                 { path: "account", element: <Account token={token} /> },
                 {
                     path: "transactions",

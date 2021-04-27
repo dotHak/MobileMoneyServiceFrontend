@@ -40,7 +40,7 @@ const updateUserDatail = async (
     id: number
 ) => {
     return fetch(detailUrl + "/" + id, {
-        method: "POST",
+        method: "PUT",
         headers: {
             Authorization: "Bearer " + token,
             "Content-Type": "application/json",
@@ -54,7 +54,9 @@ const AccountProfileDetails: FC<Props> = ({
     token,
     setUserDatails,
 }) => {
-    const handleChange = (event: any) => {
+    const handleChange = (
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
         setUserDatails({
             ...userDatails,
             [event.target.name]: event.target.value,

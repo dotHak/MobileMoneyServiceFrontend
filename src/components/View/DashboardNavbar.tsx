@@ -14,7 +14,9 @@ const DashboardNavbar: FC<Props> = ({ onMobileNavOpen, ...rest }) => {
         <AppBar elevation={0} {...rest}>
             <Toolbar>
                 <RouterLink to="/">
-                    <DollarSign />
+                    <IconButton>
+                        <DollarSign color="white" />
+                    </IconButton>
                 </RouterLink>
                 <Box sx={{ flexGrow: 1 }} />
                 <Hidden lgDown>
