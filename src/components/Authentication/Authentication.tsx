@@ -21,6 +21,8 @@ import { Color } from "@material-ui/lab/Alert";
 
 interface Props {
     setToken: (userToken: Token) => void;
+    isNewSession: boolean;
+    setIsNewSession?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface TabPanelProps {
@@ -101,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Authentication: FC<Props> = ({ setToken }) => {
+const Authentication: FC<Props> = ({ setToken, isNewSession }) => {
     const [value, setValue] = React.useState(0);
     const [messages, setMessages] = React.useState<Messages[]>([]);
     const [showMsg, setShowMsg] = React.useState(true);
@@ -138,12 +140,14 @@ const Authentication: FC<Props> = ({ setToken }) => {
                             setToken={setToken}
                             setMessages={setMessages}
                             setShowMsg={setShowMsg}
+                            isNewSession={isNewSession}
                         />
                     </TabPanel>
                     <TabPanel value={value} index={1}>
                         <Signup
                             setMessages={setMessages}
                             setShowMsg={setShowMsg}
+                            isNewSession={isNewSession}
                         />
                     </TabPanel>
                 </Paper>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import {
     Box,
     Button,
@@ -49,10 +49,14 @@ const updateUserDatail = async (
     }).then((data) => data.json());
 };
 
-const AccountProfileDetails = (props: Props) => {
+const AccountProfileDetails: FC<Props> = ({
+    userDatails,
+    token,
+    setUserDatails,
+}) => {
     const handleChange = (event: any) => {
-        props.setUserDatails({
-            ...props.userDatails,
+        setUserDatails({
+            ...userDatails,
             [event.target.name]: event.target.value,
         });
     };
@@ -60,17 +64,13 @@ const AccountProfileDetails = (props: Props) => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         let detail: UserDetail | NotFoundResponse;
-        if (props.userDatails.id) {
-            detail = await updateUserDatail(
-                props.token,
-                props.userDatails,
-                props.userDatails.id
-            );
+        if (userDatails.id) {
+            detail = await updateUserDatail(token, userDatails, userDatails.id);
         } else {
-            detail = await saveUserDatail(props.token, props.userDatails);
+            detail = await saveUserDatail(token, userDatails);
         }
         if (!isNotFoundResponse(detail)) {
-            props.setUserDatails(detail);
+            setUserDatails(detail);
         }
     };
 
@@ -91,7 +91,7 @@ const AccountProfileDetails = (props: Props) => {
                                 name="firstName"
                                 onChange={handleChange}
                                 required
-                                value={props.userDatails.firstName}
+                                value={userDatails.firstName}
                                 variant="outlined"
                             />
                         </Grid>
@@ -102,7 +102,7 @@ const AccountProfileDetails = (props: Props) => {
                                 name="lastName"
                                 onChange={handleChange}
                                 required
-                                value={props.userDatails.lastName}
+                                value={userDatails.lastName}
                                 variant="outlined"
                             />
                         </Grid>
@@ -112,7 +112,7 @@ const AccountProfileDetails = (props: Props) => {
                                 label="Middle Name"
                                 name="middleName"
                                 onChange={handleChange}
-                                value={props.userDatails.middleName}
+                                value={userDatails.middleName || ""}
                                 variant="outlined"
                             />
                         </Grid>
@@ -123,7 +123,7 @@ const AccountProfileDetails = (props: Props) => {
                                 name="region"
                                 onChange={handleChange}
                                 required
-                                value={props.userDatails.region}
+                                value={userDatails.region}
                                 variant="outlined"
                             />
                         </Grid>
@@ -134,7 +134,7 @@ const AccountProfileDetails = (props: Props) => {
                                 name="city"
                                 onChange={handleChange}
                                 required
-                                value={props.userDatails.city}
+                                value={userDatails.city}
                                 variant="outlined"
                             />
                         </Grid>
@@ -145,7 +145,7 @@ const AccountProfileDetails = (props: Props) => {
                                 name="town"
                                 onChange={handleChange}
                                 required
-                                value={props.userDatails.town}
+                                value={userDatails.town}
                                 variant="outlined"
                             />
                         </Grid>
@@ -156,7 +156,7 @@ const AccountProfileDetails = (props: Props) => {
                                 name="houseNumber"
                                 onChange={handleChange}
                                 required
-                                value={props.userDatails.houseNumber}
+                                value={userDatails.houseNumber}
                                 variant="outlined"
                             />
                         </Grid>

@@ -21,6 +21,7 @@ interface ErrorResponse {
 interface Props {
     setShowMsg: React.Dispatch<React.SetStateAction<boolean>>;
     setMessages: React.Dispatch<React.SetStateAction<Messages[]>>;
+    isNewSession: boolean;
 }
 
 const attemptSignup = async (credentials: User) => {
@@ -47,7 +48,7 @@ function isErrorResponse(res: Token | ErrorResponse): res is ErrorResponse {
     return (res as ErrorResponse).status !== undefined;
 }
 
-const Signup: FC<Props> = ({ setShowMsg, setMessages }) => {
+const Signup: FC<Props> = ({ setShowMsg, setMessages, isNewSession }) => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const classes = useStyles();
@@ -100,7 +101,7 @@ const Signup: FC<Props> = ({ setShowMsg, setMessages }) => {
                     onChange={(e: any) => setPassword(e.target.value)}
                     autoComplete="current-password"
                 />
-                <RouterLink to="/">
+                {isNewSession ? (
                     <Button
                         type="submit"
                         fullWidth
@@ -114,7 +115,23 @@ const Signup: FC<Props> = ({ setShowMsg, setMessages }) => {
                     >
                         Sign Up
                     </Button>
-                </RouterLink>
+                ) : (
+                    <RouterLink to="/">
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            onClick={() => {
+                                setShowMsg(true);
+                                setMessages([]);
+                            }}
+                            className={classes.submit}
+                        >
+                            Sign Up
+                        </Button>
+                    </RouterLink>
+                )}
             </form>
         </div>
     );

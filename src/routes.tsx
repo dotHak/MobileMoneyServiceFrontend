@@ -9,7 +9,7 @@ import Transactions from "./Pages/Transactions";
 
 type setToken = (userToken: Token) => void;
 
-const routes = (token: string, setToken: setToken) => {
+const routes = (token: string, setToken: setToken, isNewSession: boolean) => {
     return [
         {
             path: "/app",
@@ -27,7 +27,10 @@ const routes = (token: string, setToken: setToken) => {
             path: "/",
             element: <MainLayout />,
             children: [
-                { path: "/", element: <Navigate to="/app/dashboard" /> },
+                {
+                    path: "/",
+                    element: <Navigate to="/app/dashboard" />,
+                },
             ],
         },
         {
@@ -36,7 +39,12 @@ const routes = (token: string, setToken: setToken) => {
             children: [
                 {
                     path: "signin",
-                    element: <Authentication setToken={setToken} />,
+                    element: (
+                        <Authentication
+                            setToken={setToken}
+                            isNewSession={isNewSession}
+                        />
+                    ),
                 },
             ],
         },

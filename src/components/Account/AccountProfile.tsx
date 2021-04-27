@@ -1,4 +1,5 @@
 import { Avatar, Box, Card, CardContent, Typography } from "@material-ui/core";
+import { FC } from "react";
 import { UserDetail } from "../../data/entities";
 
 interface Props {
@@ -8,7 +9,7 @@ const user = {
     avatar: "/static/images/avatars/avatar_6.png",
 };
 
-const AccountProfile = (props: Props) => (
+const AccountProfile: FC<Props> = ({ userDetail }) => (
     <Card>
         <CardContent>
             <Box
@@ -26,13 +27,17 @@ const AccountProfile = (props: Props) => (
                     }}
                 />
                 <Typography color="textPrimary" gutterBottom variant="h3">
-                    {`${props.userDetail?.firstName} ${props.userDetail?.middleName}  ${props.userDetail?.lastName}`}
+                    {`${userDetail?.firstName} ${
+                        userDetail?.middleName === null
+                            ? ""
+                            : userDetail.middleName
+                    }  ${userDetail?.lastName}`}
                 </Typography>
                 <Typography color="textSecondary" variant="body1">
-                    {`${props.userDetail?.region} | ${props.userDetail?.city} | ${props.userDetail?.town}`}
+                    {`${userDetail?.region} | ${userDetail?.city} | ${userDetail?.town}`}
                 </Typography>
                 <Typography color="textSecondary" variant="body1">
-                    {`${props.userDetail?.houseNumber}`}
+                    {`${userDetail?.houseNumber}`}
                 </Typography>
                 <Typography color="textSecondary" variant="body1"></Typography>
             </Box>

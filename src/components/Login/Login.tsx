@@ -23,6 +23,7 @@ interface Props {
     setToken: (userToken: Token) => void;
     setMessages: React.Dispatch<React.SetStateAction<Messages[]>>;
     setShowMsg: React.Dispatch<React.SetStateAction<boolean>>;
+    isNewSession: boolean;
 }
 
 const attemptLogin = async (credentials: User) => {
@@ -47,7 +48,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Login: FC<Props> = ({ setMessages, setToken, setShowMsg }) => {
+const Login: FC<Props> = ({
+    setMessages,
+    setToken,
+    setShowMsg,
+    isNewSession,
+}) => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const classes = useStyles();
@@ -97,7 +103,7 @@ const Login: FC<Props> = ({ setMessages, setToken, setShowMsg }) => {
                     control={<Checkbox value="remember" color="primary" />}
                     label="Remember me"
                 />
-                <RouterLink to="/">
+                {isNewSession ? (
                     <Button
                         type="submit"
                         fullWidth
@@ -111,7 +117,23 @@ const Login: FC<Props> = ({ setMessages, setToken, setShowMsg }) => {
                     >
                         Sign In
                     </Button>
-                </RouterLink>
+                ) : (
+                    <RouterLink to="/">
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            onClick={() => {
+                                setShowMsg(true);
+                                setMessages([]);
+                            }}
+                            className={classes.submit}
+                        >
+                            Sign In
+                        </Button>
+                    </RouterLink>
+                )}
                 <Grid container>
                     <Grid item xs>
                         <Link href="#" variant="body2">
