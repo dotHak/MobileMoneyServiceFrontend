@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link as RouterLink } from "react-router-dom";
 
 import { Token } from "../App/useToken";
 import { Messages } from "../Authentication/Authentication";
@@ -46,7 +47,7 @@ function isErrorResponse(res: Token | ErrorResponse): res is ErrorResponse {
     return (res as ErrorResponse).status !== undefined;
 }
 
-const Signup = (props: Props) => {
+const Signup: FC<Props> = ({ setShowMsg, setMessages }) => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const classes = useStyles();
@@ -63,12 +64,12 @@ const Signup = (props: Props) => {
                 messges.push({ msg: err, type: "error" });
             });
 
-            props.setMessages(messges);
+            setMessages(messges);
         } else {
             const successMsg: string =
                 "Your account has been created — check your email and confirm!";
             messges.push({ msg: successMsg, type: "success" });
-            props.setMessages(messges);
+            setMessages(messges);
         }
     };
 
@@ -99,19 +100,21 @@ const Signup = (props: Props) => {
                     onChange={(e: any) => setPassword(e.target.value)}
                     autoComplete="current-password"
                 />
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                        props.setShowMsg(true);
-                        props.setMessages([]);
-                    }}
-                    className={classes.submit}
-                >
-                    Sign Up
-                </Button>
+                <RouterLink to="/">
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                            setShowMsg(true);
+                            setMessages([]);
+                        }}
+                        className={classes.submit}
+                    >
+                        Sign Up
+                    </Button>
+                </RouterLink>
             </form>
         </div>
     );

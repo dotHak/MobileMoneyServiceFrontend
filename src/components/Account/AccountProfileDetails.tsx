@@ -13,7 +13,7 @@ import {
     UserDetail,
     NotFoundResponse,
     isNotFoundResponse,
-} from "../../entities";
+} from "../../data/entities";
 
 interface Props {
     userDatails: UserDetail;

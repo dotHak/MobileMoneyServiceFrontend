@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 
-import { PhoneNumber } from "../../entities";
+import { PhoneNumber } from "../../data/entities";
 
 interface Props {
     phoneNumberList: PhoneNumber[];

@@ -1,6 +1,5 @@
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import PropTypes from "prop-types";
 import { Box, Divider, Drawer, Hidden, List } from "@material-ui/core";
 import {
     BarChart as BarChartIcon,
@@ -8,6 +7,12 @@ import {
     List as ListIcon,
 } from "react-feather";
 import NavItem from "./NavItem";
+import { Logout } from "../Logout/Logout";
+
+interface Props {
+    onMobileClose: () => void;
+    openMobile: boolean;
+}
 
 const items = [
     {
@@ -27,14 +32,14 @@ const items = [
     },
 ];
 
-const DashboardSidebar = ({ onMobileClose, openMobile }: any) => {
+const DashboardSidebar: FC<Props> = ({ onMobileClose, openMobile }) => {
     const location = useLocation();
 
     useEffect(() => {
         if (openMobile && onMobileClose) {
             onMobileClose();
         }
-    }, [location.pathname, openMobile, onMobileClose]);
+    }, [location.pathname]);
 
     const content = (
         <Box
@@ -76,6 +81,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }: any) => {
                     }}
                 >
                     {content}
+                    <Logout variant={"contained"} />
                 </Drawer>
             </Hidden>
             <Hidden lgDown>
@@ -96,16 +102,6 @@ const DashboardSidebar = ({ onMobileClose, openMobile }: any) => {
             </Hidden>
         </>
     );
-};
-
-DashboardSidebar.propTypes = {
-    onMobileClose: PropTypes.func,
-    openMobile: PropTypes.bool,
-};
-
-DashboardSidebar.defaultProps = {
-    onMobileClose: () => {},
-    openMobile: false,
 };
 
 export default DashboardSidebar;

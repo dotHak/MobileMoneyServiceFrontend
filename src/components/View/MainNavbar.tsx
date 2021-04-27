@@ -1,12 +1,13 @@
 import { Link as RouterLink } from "react-router-dom";
 import { AppBar, Toolbar } from "@material-ui/core";
-import Logo from "../App/Logo";
+import { DollarSign } from "react-feather";
+import { FC } from "react";
 
-const MainNavbar = (props: any) => (
+const MainNavbar: FC<any> = (props) => (
     <AppBar elevation={0} {...props}>
         <Toolbar sx={{ height: 64 }}>
             <RouterLink to="/">
-                <Logo />
+                <DollarSign />
             </RouterLink>
         </Toolbar>
     </AppBar>

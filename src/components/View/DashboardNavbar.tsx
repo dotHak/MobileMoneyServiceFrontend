@@ -1,42 +1,24 @@
-import { useState } from "react";
+import { FC } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import PropTypes from "prop-types";
-import {
-    AppBar,
-    Badge,
-    Box,
-    Hidden,
-    IconButton,
-    Toolbar,
-} from "@material-ui/core";
+import { DollarSign } from "react-feather";
+import { AppBar, Box, Hidden, IconButton, Toolbar } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import NotificationsIcon from "@material-ui/icons/NotificationsOutlined";
-import InputIcon from "@material-ui/icons/Input";
-import Logo from "../App/Logo";
+import { Logout } from "../Logout/Logout";
 
-const DashboardNavbar = ({ onMobileNavOpen, ...rest }: any) => {
-    const [notifications] = useState([]);
+interface Props {
+    onMobileNavOpen: () => void;
+}
 
+const DashboardNavbar: FC<Props> = ({ onMobileNavOpen, ...rest }) => {
     return (
         <AppBar elevation={0} {...rest}>
             <Toolbar>
                 <RouterLink to="/">
-                    <Logo />
+                    <DollarSign />
                 </RouterLink>
                 <Box sx={{ flexGrow: 1 }} />
                 <Hidden lgDown>
-                    <IconButton color="inherit">
-                        <Badge
-                            badgeContent={notifications.length}
-                            color="primary"
-                            variant="dot"
-                        >
-                            <NotificationsIcon />
-                        </Badge>
-                    </IconButton>
-                    <IconButton color="inherit">
-                        <InputIcon />
-                    </IconButton>
+                    <Logout variant={"contained"} />
                 </Hidden>
                 <Hidden lgUp>
                     <IconButton color="inherit" onClick={onMobileNavOpen}>
@@ -46,10 +28,6 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }: any) => {
             </Toolbar>
         </AppBar>
     );
-};
-
-DashboardNavbar.propTypes = {
-    onMobileNavOpen: PropTypes.func,
 };
 
 export default DashboardNavbar;

@@ -11,7 +11,7 @@ import routes from "./routes";
 
 const App = () => {
     const [token, setToken] = useToken();
-    const routing = useRoutes(routes(token));
+    const routing = useRoutes(routes(token, setToken));
 
     if (!token) {
         return <Authentication setToken={setToken} />;

@@ -1,5 +1,5 @@
 import { Avatar, Box, Card, CardContent, Typography } from "@material-ui/core";
-import { UserDetail } from "../../entities";
+import { UserDetail } from "../../data/entities";
 
 interface Props {
     userDetail: UserDetail;

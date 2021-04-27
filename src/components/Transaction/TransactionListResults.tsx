@@ -8,7 +8,7 @@ import {
     TableHead,
     TableRow,
 } from "@material-ui/core";
-import { Transaction } from "../../entities";
+import { Transaction } from "../../data/entities";
 
 interface Props {
     transactions: Transaction[];

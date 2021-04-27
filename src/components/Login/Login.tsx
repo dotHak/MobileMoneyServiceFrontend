@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { FC, useState } from "react";
 
 import { Token } from "../App/useToken";
 
@@ -13,6 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import "./Login.css";
 import { Messages } from "../Authentication/Authentication";
+import { Link as RouterLink } from "react-router-dom";
 
 interface User {
     email: string;
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Login = (props: Props) => {
+const Login: FC<Props> = ({ setMessages, setToken, setShowMsg }) => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const classes = useStyles();
@@ -59,14 +59,11 @@ const Login = (props: Props) => {
             password,
         });
         if (token !== null) {
-            props.setToken(token);
-            console.log("here");
+            setToken(token);
             return;
         }
 
-        props.setMessages([
-            { msg: "Incorrect eamil or password!", type: "error" },
-        ]);
+        setMessages([{ msg: "Incorrect eamil or password!", type: "error" }]);
     };
 
     return (
@@ -100,19 +97,21 @@ const Login = (props: Props) => {
                     control={<Checkbox value="remember" color="primary" />}
                     label="Remember me"
                 />
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                        props.setShowMsg(true);
-                        props.setMessages([]);
-                    }}
-                    className={classes.submit}
-                >
-                    Sign In
-                </Button>
+                <RouterLink to="/">
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                            setShowMsg(true);
+                            setMessages([]);
+                        }}
+                        className={classes.submit}
+                    >
+                        Sign In
+                    </Button>
+                </RouterLink>
                 <Grid container>
                     <Grid item xs>
                         <Link href="#" variant="body2">
@@ -131,7 +130,3 @@ const Login = (props: Props) => {
 };
 
 export default Login;
-
-Login.propTypes = {
-    setToken: PropTypes.func.isRequired,
-};

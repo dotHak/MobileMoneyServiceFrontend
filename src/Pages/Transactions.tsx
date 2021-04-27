@@ -2,7 +2,11 @@ import { Box, Container } from "@material-ui/core";
 import TransactionListToolbar from "../components/Transaction/TransactionListToolbar";
 import TransactionListResults from "../components/Transaction/TransactionListResults";
 
-import { Transaction, NotFoundResponse, isNotFoundResponse } from "../entities";
+import {
+    Transaction,
+    NotFoundResponse,
+    isNotFoundResponse,
+} from "../data/entities";
 import { useState, useEffect } from "react";
 
 interface Props {

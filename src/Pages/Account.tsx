@@ -7,7 +7,7 @@ import {
     NotFoundResponse,
     isNotFoundResponse,
     PhoneNumber,
-} from "../entities";
+} from "../data/entities";
 import PhoneNumberList from "../components/PhoneNumbers/PhoneNumberList";
 
 interface Props {

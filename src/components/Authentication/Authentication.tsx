@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
@@ -38,7 +38,7 @@ function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {"Copyright © "}
-            <Link color="inherit" href="https://material-ui.com/">
+            <Link color="inherit" href="">
                 Mobile Money Service
             </Link>{" "}
             {new Date().getFullYear()}
@@ -101,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Authentication = (props: Props) => {
+const Authentication: FC<Props> = ({ setToken }) => {
     const [value, setValue] = React.useState(0);
     const [messages, setMessages] = React.useState<Messages[]>([]);
     const [showMsg, setShowMsg] = React.useState(true);
@@ -135,7 +135,7 @@ const Authentication = (props: Props) => {
 
                     <TabPanel value={value} index={0}>
                         <Login
-                            setToken={props.setToken}
+                            setToken={setToken}
                             setMessages={setMessages}
                             setShowMsg={setShowMsg}
                         />
