@@ -1,54 +1,104 @@
-import { Navigate } from "react-router-dom";
-import { Token } from "./components/App/useToken";
+import { ThemeProvider } from "@material-ui/core";
+import React, { FC } from "react";
+import { Navigate, useRoutes } from "react-router-dom";
 import Authentication from "./components/Authentication/Authentication";
-import Dashboard from "./Pages/Dashboard";
+import { Logout } from "./components/Logout/Logout";
 import DashboardLayout from "./components/View/DashboardLayout";
+import GlobalStyles from "./components/View/GlobalStyles";
 import MainLayout from "./components/View/MainLayout";
+import useToken from "./data/useToken";
 import Account from "./Pages/Account";
+import Dashboard from "./Pages/Dashboard";
 import Transactions from "./Pages/Transactions";
+import theme from "./theme";
 
-type setToken = (userToken: Token) => void;
+// type setToken = (userToken: Token) => void;
 
-const routes = (token: string, setToken: setToken, isNewSession: boolean) => {
-    return [
+const Routes: FC = () => {
+  const [token, setToken] = useToken();
+
+  const routing = useRoutes([
+    {
+      path: "/app",
+      element: <DashboardLayout />,
+      children: [
         {
-            path: "/app",
-            element: <DashboardLayout />,
-            children: [
-                { path: "dashboard", element: <Dashboard token={token} /> },
-                { path: "account", element: <Account token={token} /> },
-                {
-                    path: "transactions",
-                    element: <Transactions token={token} />,
-                },
-            ],
+          path: "dashboard",
+          element:
+            token.length === 0 ? (
+              <Navigate to="/authenticate" />
+            ) : (
+              <Dashboard token={token} />
+            ),
         },
         {
-            path: "/",
-            element: <MainLayout />,
-            children: [
-                {
-                    path: "/",
-                    element: <Navigate to="/app/dashboard" />,
-                },
-            ],
+          path: "account",
+          element:
+            token.length === 0 ? (
+              <Navigate to="/authenticate" />
+            ) : (
+              <Account token={token} />
+            ),
         },
         {
-            path: "/",
-            element: <MainLayout />,
-            children: [
-                {
-                    path: "signin",
-                    element: (
-                        <Authentication
-                            setToken={setToken}
-                            isNewSession={isNewSession}
-                        />
-                    ),
-                },
-            ],
+          path: "transactions",
+          element:
+            token.length === 0 ? (
+              <Navigate to="/authenticate" />
+            ) : (
+              <Transactions token={token} />
+            ),
         },
-    ];
+      ],
+    },
+    {
+      path: "/",
+      element: <MainLayout />,
+      children: [
+        {
+          path: "/",
+          element:
+            token.length === 0 ? (
+              <Navigate to="/authenticate" />
+            ) : (
+              <Navigate to="/app/dashboard" />
+            ),
+        },
+      ],
+    },
+    {
+      path: "/",
+      element: <MainLayout />,
+      children: [
+        {
+          path: "authenticate",
+          element:
+            token.length !== 0 ? (
+              <Navigate to="/" />
+            ) : (
+              <Authentication setToken={setToken} />
+            ),
+        },
+      ],
+    },
+    {
+      path: "/",
+      element: <MainLayout />,
+      children: [
+        {
+          path: "logout",
+          element: <Logout setToken={setToken} />,
+        },
+      ],
+    },
+  ]);
+
+  return (
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      {routing}
+    </ThemeProvider>
+  );
 };
 
-export default routes;
+export default Routes;

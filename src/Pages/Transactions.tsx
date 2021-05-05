@@ -1,61 +1,57 @@
 import { Box, Container } from "@material-ui/core";
-import TransactionListToolbar from "../components/Transaction/TransactionListToolbar";
+import { FC, useEffect, useState } from "react";
 import TransactionListResults from "../components/Transaction/TransactionListResults";
-
+import TransactionListToolbar from "../components/Transaction/TransactionListToolbar";
 import {
-    Transaction,
-    NotFoundResponse,
-    isNotFoundResponse,
+  baseUrl,
+  isNotFoundResponse,
+  NotFoundResponse,
+  Transaction,
 } from "../data/entities";
-import { useState, useEffect } from "react";
 
 interface Props {
-    token: string;
+  token: string;
 }
-const transactionUrl: string = "http://localhost:8080/api/v1/transactions";
+const transactionUrl: string = baseUrl + "transactions";
 
 const getTransactions = async (token: string) => {
-    return fetch(transactionUrl, {
-        method: "GET",
-        headers: {
-            Authorization: "Bearer " + token,
-        },
-    }).then((data) => data.json());
+  return fetch(transactionUrl, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  }).then((data) => data.json());
 };
 
-const Transactions = (props: Props) => {
-    const [transactionList, setTransactionList] = useState<Transaction[]>([]);
+const Transactions: FC<Props> = ({ token }) => {
+  const [transactionList, setTransactionList] = useState<Transaction[]>([]);
 
-    useEffect(() => {
-        getTransactions(props.token).then(
-            (data: Transaction[] | NotFoundResponse) => {
-                if (!isNotFoundResponse(data)) {
-                    setTransactionList(data);
-                }
-            }
-        );
-    }, [props.token]);
+  useEffect(() => {
+    getTransactions(token).then((data: Transaction[] | NotFoundResponse) => {
+      if (!isNotFoundResponse(data)) {
+        setTransactionList(data);
+      }
+    });
+  }, [token]);
 
-    return (
-        <>
-            <Box
-                sx={{
-                    backgroundColor: "background.default",
-                    minHeight: "100%",
-                    py: 3,
-                }}
-            >
-                <Container maxWidth={false}>
-                    <TransactionListToolbar />
-                    <Box sx={{ pt: 3 }}>
-                        <TransactionListResults
-                            transactions={transactionList}
-                        />
-                    </Box>
-                </Container>
-            </Box>
-        </>
-    );
+  return (
+    <>
+      <Box
+        sx={{
+          backgroundColor: "background.default",
+          minHeight: "100%",
+          py: 3,
+        }}
+      >
+        <Container maxWidth={false}>
+          <TransactionListToolbar />
+          <Box sx={{ pt: 3 }}>
+            <TransactionListResults transactions={transactionList} />
+          </Box>
+        </Container>
+      </Box>
+    </>
+  );
 };
 
 export default Transactions;

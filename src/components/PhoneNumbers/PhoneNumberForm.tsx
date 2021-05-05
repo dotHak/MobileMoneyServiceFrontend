@@ -29,7 +29,7 @@ export const PhoneNumberForm: React.FC<PhoneNumberFormProps> = ({
         if (event.target.name === "network") {
             setItem({
                 ...item,
-                ["network"]: networkList[Number(event.target.value) - 1],
+                network: networkList[Number(event.target.value) - 1],
             });
             return;
         }

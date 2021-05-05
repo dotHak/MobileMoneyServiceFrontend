@@ -1,35 +1,13 @@
-import { BrowserRouter as Router, useRoutes } from "react-router-dom";
-import { ThemeProvider } from "@material-ui/core";
+import { BrowserRouter as Router } from "react-router-dom";
 import "./App.css";
+import Routes from "./routes";
 
-import GlobalStyles from "./components/View/GlobalStyles";
-import Authentication from "./components/Authentication/Authentication";
-import useToken from "./components/App/useToken";
-
-import theme from "./theme";
-import routes from "./routes";
-
-const App = () => {
-    const [token, setToken] = useToken();
-    const routing = useRoutes(routes(token, setToken, false));
-
-    if (!token) {
-        return <Authentication setToken={setToken} isNewSession={true} />;
-    }
-
-    return (
-        <ThemeProvider theme={theme}>
-            <GlobalStyles />
-            {routing}
-        </ThemeProvider>
-    );
+export const App = () => {
+  return (
+    <Router>
+      <Routes />
+    </Router>
+  );
 };
 
-const AppWrapper = () => {
-    return (
-        <Router>
-            <App />
-        </Router>
-    );
-};
-export default AppWrapper;
+export default App;

@@ -1,20 +1,13 @@
 import React from "react";
-import { Button } from "@material-ui/core";
-import { Link as RouterLink } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { Token } from "../../data/useToken";
 
 interface LogoutProps {
-    variant: "text" | "outlined" | "contained" | undefined;
+  setToken: (token: Token) => void;
 }
 
-export const Logout: React.FC<LogoutProps> = ({ variant }) => {
-    return (
-        <RouterLink to="/signin">
-            <Button
-                variant={variant}
-                onClick={() => localStorage.removeItem("token")}
-            >
-                Logout
-            </Button>
-        </RouterLink>
-    );
+export const Logout: React.FC<LogoutProps> = ({ setToken }) => {
+  setToken({ token: "" });
+
+  return <Navigate to="/authenticate" />;
 };
