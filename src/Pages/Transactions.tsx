@@ -25,11 +25,12 @@ const getTransactions = async (token: string) => {
 
 const Transactions: FC<Props> = ({ token }) => {
   const [transactionList, setTransactionList] = useState<Transaction[]>([]);
-
+  const [backupList, setBackupList] = useState<Transaction[]>([]);
   useEffect(() => {
     getTransactions(token).then((data: Transaction[] | NotFoundResponse) => {
       if (!isNotFoundResponse(data)) {
         setTransactionList(data);
+        setBackupList(data);
       }
     });
   }, [token]);
@@ -48,6 +49,7 @@ const Transactions: FC<Props> = ({ token }) => {
             token={token}
             transactionList={transactionList}
             setTransactionList={setTransactionList}
+            backupList={backupList}
           />
           <Box sx={{ pt: 3 }}>
             <TransactionListResults transactions={transactionList} />

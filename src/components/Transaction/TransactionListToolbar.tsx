@@ -27,6 +27,7 @@ interface Props {
   token: string;
   setTransactionList: React.Dispatch<React.SetStateAction<Transaction[]>>;
   transactionList: Transaction[];
+  backupList: Transaction[];
 }
 const initialTransaction: NewTransaction = { price: 0, email: "" };
 
@@ -57,6 +58,7 @@ const TransactionListToolbar: FC<Props> = ({
   token,
   setTransactionList,
   transactionList,
+  backupList,
 }) => {
   const [openPopup, setOpenPopup] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
@@ -92,6 +94,27 @@ const TransactionListToolbar: FC<Props> = ({
     setTransaction(initialTransaction);
   };
 
+  const handleSearch = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    event.preventDefault();
+    const searchWord = event.target.value.toLowerCase();
+    if (searchWord.length === 0) {
+      setTransactionList(backupList);
+      return;
+    }
+
+    const trans: Transaction[] = backupList.filter(
+      (value) =>
+        value.receiver.number.includes(searchWord) ||
+        value.sender.number.includes(searchWord) ||
+        value.price.toString().includes(searchWord) ||
+        value.status.name.toLocaleLowerCase().includes(searchWord)
+    );
+
+    setTransactionList(trans);
+  };
+
   return (
     <Box>
       <Box
@@ -114,6 +137,7 @@ const TransactionListToolbar: FC<Props> = ({
             <Box sx={{ maxWidth: 500 }}>
               <TextField
                 fullWidth
+                onChange={handleSearch}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">

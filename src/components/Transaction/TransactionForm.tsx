@@ -33,6 +33,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
   phoneNumbers,
 }) => {
   const [isPhoneInput, setPhoneInput] = useState(false);
+  const [isError, setError] = useState(false);
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -51,6 +52,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
             number: event.target.value,
           },
         });
+        setError(event.target.value.length !== 10);
         break;
       case "network":
         setItem({
@@ -82,12 +84,14 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
         },
         email: undefined,
       });
+      setError(true);
     } else {
       setItem({
         ...item,
         receiver: undefined,
         email: "",
       });
+      setError(false);
     }
   };
 
@@ -119,7 +123,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
                 onChange={handleChange}
                 type="number"
                 inputProps={inputProps}
-                error={item.price <= 0}
+                error={item.price < 0}
               />
               <FormHelperText>
                 Enter the amount in cedis. Eg. 0.5 = 50 pesewas
@@ -161,7 +165,10 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
                     required
                     value={item.receiver?.number}
                     variant="outlined"
-                    error={item.receiver?.number.length !== 10}
+                    error={
+                      item.receiver?.number.length !== 10 &&
+                      item.receiver?.number.length !== 0
+                    }
                   />
                 </Grid>
                 <Grid item md={6} xs={12}>
@@ -187,7 +194,12 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
             p: 2,
           }}
         >
-          <Button color="secondary" variant="contained" type="submit">
+          <Button
+            color="secondary"
+            variant="contained"
+            type="submit"
+            disabled={isError}
+          >
             Transfer
           </Button>
         </Box>
