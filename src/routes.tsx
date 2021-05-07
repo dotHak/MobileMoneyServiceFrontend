@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@material-ui/core";
-import React, { FC } from "react";
+import { FC } from "react";
 import { Navigate, useRoutes } from "react-router-dom";
 import Authentication from "./components/Authentication/Authentication";
 import { Logout } from "./components/Logout/Logout";
@@ -11,8 +11,6 @@ import Account from "./Pages/Account";
 import Dashboard from "./Pages/Dashboard";
 import Transactions from "./Pages/Transactions";
 import theme from "./theme";
-
-// type setToken = (userToken: Token) => void;
 
 const Routes: FC = () => {
   const [token, setToken] = useToken();

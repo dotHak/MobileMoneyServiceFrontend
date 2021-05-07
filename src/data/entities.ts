@@ -18,7 +18,7 @@ export interface ErrorResponse {
 export function isErrorResponse(
   res: any | ErrorResponse
 ): res is ErrorResponse {
-  return (res as ErrorResponse).status !== undefined;
+  return (res as ErrorResponse).errors !== undefined;
 }
 
 export interface NotFoundResponse {
@@ -54,6 +54,10 @@ export interface PhoneNumber {
   isDefault: boolean;
 }
 
+export function isPhoneNumber(res: Network | PhoneNumber): res is PhoneNumber {
+  return (res as PhoneNumber).number !== undefined;
+}
+
 type StatusType = "SUCCESS" | "FAILED" | "CANCELLED" | "PENDING";
 
 export interface Status {
@@ -75,4 +79,11 @@ export interface Transaction {
   status: Status;
   price: number;
   createdDate: Date;
+}
+
+export interface NewTransaction {
+  sender?: PhoneNumber;
+  receiver?: PhoneNumber;
+  price: number;
+  email?: string;
 }

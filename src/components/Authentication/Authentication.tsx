@@ -104,8 +104,6 @@ const Authentication: FC<Props> = ({ setToken }) => {
   const [showMsg, setShowMsg] = React.useState(true);
   const classes = useStyles();
 
-  console.log("==> auth");
-
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };

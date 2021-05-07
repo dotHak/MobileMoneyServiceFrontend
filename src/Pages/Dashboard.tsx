@@ -1,5 +1,5 @@
 import { Box, Container, Grid } from "@material-ui/core";
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import LatestTransactions from "../components/Dashboard/LatestTransactions";
 import TReceived from "../components/Dashboard/Received";
 import TSent from "../components/Dashboard/Sent";

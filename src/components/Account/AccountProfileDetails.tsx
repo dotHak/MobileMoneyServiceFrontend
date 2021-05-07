@@ -1,4 +1,3 @@
-import React, { FC } from "react";
 import {
   Box,
   Button,
@@ -9,11 +8,12 @@ import {
   Grid,
   TextField,
 } from "@material-ui/core";
+import React, { FC } from "react";
 import {
-  UserDetail,
-  NotFoundResponse,
-  isNotFoundResponse,
   baseUrl,
+  isNotFoundResponse,
+  NotFoundResponse,
+  UserDetail,
 } from "../../data/entities";
 
 interface Props {
@@ -119,7 +119,7 @@ const AccountProfileDetails: FC<Props> = ({
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                label="Regeon"
+                label="Region"
                 name="region"
                 onChange={handleChange}
                 required

@@ -70,6 +70,7 @@ const Login: FC<Props> = ({ setMessages, setToken, setShowMsg }) => {
     <div className="login-wrapper">
       <form className={classes.form} onSubmit={handleSubmit}>
         <TextField
+          type="email"
           variant="outlined"
           margin="normal"
           required

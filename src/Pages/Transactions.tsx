@@ -44,7 +44,11 @@ const Transactions: FC<Props> = ({ token }) => {
         }}
       >
         <Container maxWidth={false}>
-          <TransactionListToolbar />
+          <TransactionListToolbar
+            token={token}
+            transactionList={transactionList}
+            setTransactionList={setTransactionList}
+          />
           <Box sx={{ pt: 3 }}>
             <TransactionListResults transactions={transactionList} />
           </Box>

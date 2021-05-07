@@ -11,7 +11,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { FC, useEffect, useState } from "react";
-
 import {
   baseUrl,
   ErrorResponse,
@@ -70,7 +69,6 @@ const PhoneNumberList: FC<Props> = ({ token }) => {
   const [isNew, setIsNew] = useState(true);
   const [errorMessage, setErrorMessage] = useState<String[]>([]);
   const [phones, setPhones] = useState<PhoneNumber[]>([]);
-  const [dataChange, setDataChange] = useState(false);
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -88,7 +86,7 @@ const PhoneNumberList: FC<Props> = ({ token }) => {
     }
 
     setOpenPopup(false);
-    setDataChange(!dataChange);
+    setPhones([...phones, response as PhoneNumber]);
   };
 
   useEffect(() => {
@@ -97,7 +95,7 @@ const PhoneNumberList: FC<Props> = ({ token }) => {
         setPhones(data);
       }
     });
-  }, [token, dataChange]);
+  }, [token]);
 
   return (
     <>
