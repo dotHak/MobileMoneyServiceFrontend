@@ -1,42 +1,21 @@
-import { Button, makeStyles } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import React from "react";
 
 interface ActionButtonProps {
-    onClick: () => void;
-    color: "root" | "secondary" | "primary";
+  onClick: () => void;
+  color: "inherit" | "secondary" | "primary" | undefined;
+  variant?: "text" | "outlined" | "contained" | undefined;
 }
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        minWidth: 0,
-        margin: theme.spacing(0.5),
-    },
-    secondary: {
-        backgroundColor: theme.palette.secondary.light,
-        "& .MuiButton-label": {
-            color: theme.palette.secondary.main,
-        },
-    },
-    primary: {
-        backgroundColor: theme.palette.primary.light,
-        "& .MuiButton-label": {
-            color: theme.palette.primary.main,
-        },
-    },
-}));
-
 export const ActionButton: React.FC<ActionButtonProps> = ({
-    children,
-    onClick,
-    color,
+  children,
+  onClick,
+  color,
+  variant,
 }) => {
-    const classes = useStyles();
-    return (
-        <Button
-            className={`${classes.root} ${classes[color]}`}
-            onClick={onClick}
-        >
-            {children}
-        </Button>
-    );
+  return (
+    <Button onClick={onClick} variant={variant} color={color}>
+      {children}
+    </Button>
+  );
 };

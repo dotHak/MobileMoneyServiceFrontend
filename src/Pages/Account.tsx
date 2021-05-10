@@ -1,5 +1,7 @@
-import { Box, Container, Grid } from "@material-ui/core";
+import { Box, Card, CardContent, Container, Grid } from "@material-ui/core";
 import { FC, useEffect, useState } from "react";
+import { FingerprintUpload } from "../../src/components/Fingerprint/FingerprintUpload";
+import { IAmMerchant } from "../../src/components/Merchant/IAmMerchant";
 import AccountProfile from "../components/Account/AccountProfile";
 import AccountProfileDetails from "../components/Account/AccountProfileDetails";
 import PhoneNumberList from "../components/PhoneNumbers/PhoneNumberList";
@@ -12,9 +14,11 @@ import {
 
 interface Props {
   token: string;
+  setIsMerchant: React.Dispatch<React.SetStateAction<boolean>>;
+  isMerchant: boolean;
 }
 
-const getUserDatail = async (token: string) => {
+const getUserDetail = async (token: string) => {
   return fetch(baseUrl + "usersDetails", {
     method: "GET",
     headers: {
@@ -23,7 +27,7 @@ const getUserDatail = async (token: string) => {
   }).then((data) => data.json());
 };
 
-const Account: FC<Props> = ({ token }) => {
+const Account: FC<Props> = ({ token, isMerchant, setIsMerchant }) => {
   const [userDetail, setUserDetail] = useState<UserDetail>({
     firstName: "",
     lastName: "",
@@ -35,7 +39,7 @@ const Account: FC<Props> = ({ token }) => {
   });
 
   useEffect(() => {
-    getUserDatail(token).then((data: UserDetail | NotFoundResponse) => {
+    getUserDetail(token).then((data: UserDetail | NotFoundResponse) => {
       if (!isNotFoundResponse(data)) {
         setUserDetail(data);
       }
@@ -61,10 +65,28 @@ const Account: FC<Props> = ({ token }) => {
             </Grid>
             <Grid item lg={8} md={6} xs={12}>
               <AccountProfileDetails
-                userDatails={userDetail}
-                setUserDatails={setUserDetail}
+                userDetails={userDetail}
+                setUserDetails={setUserDetail}
                 token={token}
               />
+              <Box sx={{ pt: 3 }}>
+                <Card>
+                  <CardContent>
+                    <Grid container spacing={2}>
+                      <Grid item lg={4} md={6} xs={12}>
+                        <IAmMerchant
+                          token={token}
+                          isMerchant={isMerchant}
+                          setIsMerchant={setIsMerchant}
+                        />
+                      </Grid>
+                      <Grid item lg={8} md={6} xs={12}>
+                        <FingerprintUpload token={token} />
+                      </Grid>
+                    </Grid>
+                  </CardContent>
+                </Card>
+              </Box>
             </Grid>
           </Grid>
         </Container>

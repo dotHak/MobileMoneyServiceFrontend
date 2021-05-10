@@ -2,8 +2,10 @@ import { Box, Divider, Drawer, Hidden, List } from "@material-ui/core";
 import { FC, useEffect } from "react";
 import {
   BarChart as BarChartIcon,
+  Icon,
   List as ListIcon,
   LogOut as LogOutIcon,
+  ShoppingBag,
   User as UserIcon,
 } from "react-feather";
 import { useLocation } from "react-router-dom";
@@ -12,27 +14,46 @@ import NavItem from "./NavItem";
 interface Props {
   onMobileClose: () => void;
   openMobile: boolean;
+  isMerchant: boolean;
 }
+interface SidebarNavItem {
+  href: string;
+  icon: Icon;
+  title: string;
+}
+const getItems = (include: boolean) => {
+  const items: SidebarNavItem[] = [
+    {
+      href: "/app/dashboard",
+      icon: BarChartIcon,
+      title: "Dashboard",
+    },
+    {
+      href: "/app/account",
+      icon: UserIcon,
+      title: "Account",
+    },
+    {
+      href: "/app/transactions",
+      icon: ListIcon,
+      title: "Transactions",
+    },
+  ];
+  if (include) {
+    items.push({
+      href: "/app/merchants",
+      icon: ShoppingBag,
+      title: "Merchants",
+    });
+  }
+  return items;
+};
 
-const items = [
-  {
-    href: "/app/dashboard",
-    icon: BarChartIcon,
-    title: "Dashboard",
-  },
-  {
-    href: "/app/account",
-    icon: UserIcon,
-    title: "Account",
-  },
-  {
-    href: "/app/transactions",
-    icon: ListIcon,
-    title: "Transactions",
-  },
-];
-
-const DashboardSidebar: FC<Props> = ({ onMobileClose, openMobile }) => {
+const DashboardSidebar: FC<Props> = ({
+  onMobileClose,
+  openMobile,
+  isMerchant,
+}) => {
   const location = useLocation();
 
   useEffect(() => {
@@ -52,7 +73,7 @@ const DashboardSidebar: FC<Props> = ({ onMobileClose, openMobile }) => {
       <Divider />
       <Box sx={{ p: 2 }}>
         <List>
-          {items.map((item) => (
+          {getItems(isMerchant).map((item: SidebarNavItem) => (
             <NavItem
               href={item.href}
               key={item.title}
@@ -80,13 +101,13 @@ const DashboardSidebar: FC<Props> = ({ onMobileClose, openMobile }) => {
             },
           }}
         >
-          {content}{" "}
+          {content}
           <NavItem
             href="/logout"
             title="Logout"
             icon={LogOutIcon}
             key="logout"
-          />
+          ></NavItem>
         </Drawer>
       </Hidden>
       <Hidden lgDown>

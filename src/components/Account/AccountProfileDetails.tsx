@@ -17,14 +17,14 @@ import {
 } from "../../data/entities";
 
 interface Props {
-  userDatails: UserDetail;
-  setUserDatails: React.Dispatch<React.SetStateAction<UserDetail>>;
+  userDetails: UserDetail;
+  setUserDetails: React.Dispatch<React.SetStateAction<UserDetail>>;
   token: string;
 }
 
 const detailUrl: string = baseUrl + "usersDetails";
 
-const saveUserDatail = async (token: string, credentials: UserDetail) => {
+const saveUserDetail = async (token: string, credentials: UserDetail) => {
   return fetch(detailUrl, {
     method: "POST",
     headers: {
@@ -35,7 +35,7 @@ const saveUserDatail = async (token: string, credentials: UserDetail) => {
   }).then((data) => data.json());
 };
 
-const updateUserDatail = async (
+const updateUserDetail = async (
   token: string,
   credentials: UserDetail,
   id: number
@@ -51,15 +51,15 @@ const updateUserDatail = async (
 };
 
 const AccountProfileDetails: FC<Props> = ({
-  userDatails,
+  userDetails,
   token,
-  setUserDatails,
+  setUserDetails,
 }) => {
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setUserDatails({
-      ...userDatails,
+    setUserDetails({
+      ...userDetails,
       [event.target.name]: event.target.value,
     });
   };
@@ -67,13 +67,13 @@ const AccountProfileDetails: FC<Props> = ({
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     let detail: UserDetail | NotFoundResponse;
-    if (userDatails.id) {
-      detail = await updateUserDatail(token, userDatails, userDatails.id);
+    if (userDetails.id) {
+      detail = await updateUserDetail(token, userDetails, userDetails.id);
     } else {
-      detail = await saveUserDatail(token, userDatails);
+      detail = await saveUserDetail(token, userDetails);
     }
     if (!isNotFoundResponse(detail)) {
-      setUserDatails(detail);
+      setUserDetails(detail);
     }
   };
 
@@ -91,7 +91,7 @@ const AccountProfileDetails: FC<Props> = ({
                 name="firstName"
                 onChange={handleChange}
                 required
-                value={userDatails.firstName}
+                value={userDetails.firstName}
                 variant="outlined"
               />
             </Grid>
@@ -102,7 +102,7 @@ const AccountProfileDetails: FC<Props> = ({
                 name="lastName"
                 onChange={handleChange}
                 required
-                value={userDatails.lastName}
+                value={userDetails.lastName}
                 variant="outlined"
               />
             </Grid>
@@ -112,7 +112,7 @@ const AccountProfileDetails: FC<Props> = ({
                 label="Middle Name"
                 name="middleName"
                 onChange={handleChange}
-                value={userDatails.middleName || ""}
+                value={userDetails.middleName || ""}
                 variant="outlined"
               />
             </Grid>
@@ -123,7 +123,7 @@ const AccountProfileDetails: FC<Props> = ({
                 name="region"
                 onChange={handleChange}
                 required
-                value={userDatails.region}
+                value={userDetails.region}
                 variant="outlined"
               />
             </Grid>
@@ -134,7 +134,7 @@ const AccountProfileDetails: FC<Props> = ({
                 name="city"
                 onChange={handleChange}
                 required
-                value={userDatails.city}
+                value={userDetails.city}
                 variant="outlined"
               />
             </Grid>
@@ -145,7 +145,7 @@ const AccountProfileDetails: FC<Props> = ({
                 name="town"
                 onChange={handleChange}
                 required
-                value={userDatails.town}
+                value={userDetails.town}
                 variant="outlined"
               />
             </Grid>
@@ -156,7 +156,7 @@ const AccountProfileDetails: FC<Props> = ({
                 name="houseNumber"
                 onChange={handleChange}
                 required
-                value={userDatails.houseNumber}
+                value={userDetails.houseNumber}
                 variant="outlined"
               />
             </Grid>

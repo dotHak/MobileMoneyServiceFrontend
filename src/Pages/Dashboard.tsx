@@ -46,14 +46,16 @@ const getTransactionsReceived = async (token: string) => {
 };
 
 const reducer = (accumulator: number, item: Transaction) => {
-  return accumulator + item.price;
+  return item.status.name === "SUCCESS"
+    ? accumulator + item.price
+    : accumulator;
 };
 
 const Dashboard: FC<DashboardProps> = ({ token }) => {
   const [totalAmount, SetTotalAmount] = useState(0);
   const [totalSent, SetTotalSent] = useState(0);
   const [totalReceived, SetTotalReceived] = useState(0);
-  const [totalTransactions, SetTotalTransactios] = useState(0);
+  const [totalTransactions, SetTotalTransactions] = useState(0);
   const [latestTransactions, SetLatestTransactions] = useState<Transaction[]>(
     []
   );
@@ -73,15 +75,15 @@ const Dashboard: FC<DashboardProps> = ({ token }) => {
         if (!isNotFoundResponse(data)) {
           const theSum = data.reduce(reducer, 0);
           SetTotalReceived(theSum);
-          SetTotalAmount(totalSent + totalReceived);
         }
       }
     );
 
+    SetTotalAmount(totalSent + totalReceived);
     getTransactions(token).then((data: Transaction[] | NotFoundResponse) => {
       if (!isNotFoundResponse(data)) {
         SetLatestTransactions(data.slice(0, 10));
-        SetTotalTransactios(data.length);
+        SetTotalTransactions(data.length);
       }
     });
   }, []);

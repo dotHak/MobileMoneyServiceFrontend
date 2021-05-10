@@ -1,13 +1,26 @@
 import { Button, ListItem } from "@material-ui/core";
+import { Icon } from "react-feather";
 import {
   matchPath,
   NavLink as RouterLink,
   useLocation,
 } from "react-router-dom";
+interface NavItemProps {
+  href: string;
+  icon: Icon;
+  title: string;
+  colorMain?: string;
+  colorActive?: string;
+}
 
-const NavItem = ({ href, icon: Icon, title, ...rest }: any) => {
+const NavItem: React.FC<NavItemProps> = ({
+  href,
+  icon: Icon,
+  title,
+  colorMain,
+  colorActive,
+}) => {
   const location = useLocation();
-
   const active = href
     ? !!matchPath(
         {
@@ -25,12 +38,11 @@ const NavItem = ({ href, icon: Icon, title, ...rest }: any) => {
         display: "flex",
         py: 0,
       }}
-      {...rest}
     >
       <Button
         component={RouterLink}
         sx={{
-          color: "text.secondary",
+          color: colorMain,
           fontWeight: "medium",
           justifyContent: "flex-start",
           letterSpacing: 0,
@@ -38,7 +50,7 @@ const NavItem = ({ href, icon: Icon, title, ...rest }: any) => {
           textTransform: "none",
           width: "100%",
           ...(active && {
-            color: "primary.main",
+            color: colorActive,
           }),
           "& svg": {
             mr: 1,
@@ -52,5 +64,8 @@ const NavItem = ({ href, icon: Icon, title, ...rest }: any) => {
     </ListItem>
   );
 };
-
+NavItem.defaultProps = {
+  colorMain: "text.secondary",
+  colorActive: "primary.main",
+};
 export default NavItem;

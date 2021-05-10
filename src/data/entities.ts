@@ -31,7 +31,7 @@ export interface NotFoundResponse {
 export function isNotFoundResponse(
   res: any | NotFoundResponse
 ): res is NotFoundResponse {
-  return (res as NotFoundResponse).status !== undefined;
+  return (res as NotFoundResponse).error !== undefined;
 }
 
 export type NetworkType = "MTN" | "VODAFONE" | "AIRTEL_TIGO";
@@ -86,4 +86,38 @@ export interface NewTransaction {
   receiver?: PhoneNumber;
   price: number;
   email?: string;
+}
+
+export interface Fingerprint {
+  id: number;
+}
+
+export interface Role {
+  id: number;
+  name: RoleType;
+}
+
+export interface AppUser {
+  id: number;
+  enable: boolean;
+  phoneNumbers?: PhoneNumber[];
+  roles: Role[];
+  createdDate: Date;
+  defaultPhoneNumber?: PhoneNumber;
+  email: string;
+}
+
+export function isAppUser(res: AppUser | any): res is AppUser {
+  return (res as AppUser).email !== undefined;
+}
+
+export interface Merchant {
+  id?: number;
+  name: string;
+  address: string;
+  email: string;
+  city: string;
+  region: string;
+  phoneNumbers: PhoneNumber[];
+  createdDate?: Date;
 }

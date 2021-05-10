@@ -39,7 +39,9 @@ const TransactionListResults: React.FC<Props> = ({ transactions }) => {
                 <TableCell>{transaction.sender.number}</TableCell>
                 <TableCell>{transaction.price}</TableCell>
                 <TableCell>
-                  {moment(transaction.createdDate).format("DD/MM/YYYY")}
+                  {moment(transaction.createdDate).format(
+                    "ddd MMMM Do, YYYY HH:mm:ss"
+                  )}
                 </TableCell>
                 <TableCell>
                   <Chip

@@ -1,4 +1,11 @@
-import { AppBar, Box, Hidden, IconButton, Toolbar } from "@material-ui/core";
+import {
+  AppBar,
+  Box,
+  Button,
+  Hidden,
+  IconButton,
+  Toolbar,
+} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { FC } from "react";
 import { DollarSign, LogOut as LogOutIcon } from "react-feather";
@@ -21,7 +28,15 @@ const DashboardNavbar: FC<DashboardNavbarProps> = ({ onMobileNavOpen }) => {
         <Hidden lgDown>
           <IconButton color="inherit">
             <RouterLink to="/logout" color="white">
-              <span>Logout </span> <LogOutIcon color="white" />
+              <Button endIcon={<LogOutIcon color="#ffffff" />}>
+                <Box
+                  sx={{
+                    color: "#ffffff",
+                  }}
+                >
+                  Logout
+                </Box>
+              </Button>
             </RouterLink>
           </IconButton>
         </Hidden>
