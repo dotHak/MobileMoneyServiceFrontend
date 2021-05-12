@@ -114,7 +114,6 @@ export const Merchants: React.FC<MerchantProps> = ({ token }) => {
               setOpenPopup={setOpenPopup}
               setFormMerchant={setFormMerchant}
             />
-            ;
           </Box>
         </Container>
       </Box>

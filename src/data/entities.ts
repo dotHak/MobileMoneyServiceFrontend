@@ -1,4 +1,4 @@
-export const baseUrl: string = "http://localhost:8080/api/v1/";
+export const baseUrl: string = " https://momoservice.herokuapp.com/api/v1/";
 export interface UserDetail {
   id?: number;
   firstName: string;

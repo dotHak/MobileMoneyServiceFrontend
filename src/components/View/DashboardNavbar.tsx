@@ -5,6 +5,7 @@ import {
   Hidden,
   IconButton,
   Toolbar,
+  Typography,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { FC } from "react";
@@ -21,7 +22,10 @@ const DashboardNavbar: FC<DashboardNavbarProps> = ({ onMobileNavOpen }) => {
       <Toolbar>
         <RouterLink to="/">
           <IconButton>
-            <DollarSign color="white" />
+            <DollarSign color="white" />{" "}
+            <Box sx={{ color: "#ffffff" }}>
+              <Typography variant="h3">Finger Pay</Typography>{" "}
+            </Box>
           </IconButton>
         </RouterLink>
         <Box sx={{ flexGrow: 1 }} />
